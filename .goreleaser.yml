@@ -1,0 +1,37 @@
+checksum:
+  name_template: "checksums.txt"
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+builds:
+  - id: dashboard
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    ignore:
+      - goos: darwin
+        goarch: arm64
+      - goos: darwin
+        goarch: arm
+      - goos: windows
+        goarch: arm64
+      - goos: windows
+        goarch: arm
+    binary: dashboard
+    ldflags:
+      - -s -w -X github.com/181192/ops-cli/pkg/util/version.Version={{.Version}} -X github.com/181192/ops-cli/pkg/util/version.GitCommit={{.Commit}}
+archives:
+  - name_template: "dashboard_{{ .Os }}_{{ .Arch }}"
+    format: binary
