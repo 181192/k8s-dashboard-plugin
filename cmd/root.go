@@ -17,6 +17,7 @@ import (
 )
 
 var loglevel string
+var configFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd *cobra.Command
@@ -25,20 +26,16 @@ var rootCmd *cobra.Command
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
 		os.Exit(1)
 	}
 }
 
 func init() {
-
 	cobra.EnableCommandSorting = false
 	flagGrouping := cmdutils.NewGrouping()
-	rootCmd = dashboard.Command(flagGrouping)
-
-	cliConfig.CfgName = "dashboard"
-
+	cliConfig.SetConfigName("dashboard")
 	cobra.OnInitialize(cliConfig.InitConfig)
+	rootCmd = dashboard.Command(flagGrouping)
 	rootCmd.AddCommand(completion.Command(rootCmd))
 	rootCmd.AddCommand(version.Command(flagGrouping))
 
@@ -50,7 +47,7 @@ func init() {
 	}
 
 	rootCmd.PersistentFlags().StringVar(&loglevel, "log-level", logger.InfoLevel.String(), "Log level (debug, info, warn, error, fatal, panic)")
-	rootCmd.PersistentFlags().StringVar(&cliConfig.CfgFile, "config", "", fmt.Sprintf("Config file (default is %s/%s.[yaml|json|toml|properties])", cliConfig.GetConfigDirectory(), cliConfig.CfgName))
+	rootCmd.PersistentFlags().StringVar(&configFile, "config", "", fmt.Sprintf("Config file (default is %s/%s.[yaml|json|toml|properties])", cliConfig.GetConfigDirectory(), cliConfig.GetConfig().CfgName))
 
 	rootCmd.SetUsageFunc(flagGrouping.Usage)
 
