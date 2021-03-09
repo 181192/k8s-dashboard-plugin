@@ -3,9 +3,10 @@ module github.com/181192/k8s-dashboard-plugin
 go 1.15
 
 require (
-	github.com/181192/ops-cli v0.1.17
+	github.com/181192/ops-cli v0.1.18
 	github.com/sirupsen/logrus v1.4.2
 	github.com/spf13/cobra v1.0.0
+	github.com/spf13/viper v1.6.2
 	k8s.io/client-go v0.18.0
 )
 
