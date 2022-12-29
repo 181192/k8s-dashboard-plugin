@@ -6,7 +6,7 @@ useradd -m user
 su user
 
 # install go
-VERSION='1.14'
+VERSION='1.19'
 OS='linux'
 ARCH='amd64'
 
@@ -23,7 +23,7 @@ go get -u golang.org/x/tools/gopls
 go get -u github.com/go-delve/delve/cmd/dlv
 go get -u github.com/rakyll/hey
 
-# vscode-go dependencies 
+# vscode-go dependencies
 echo "Getting dependencies for the vscode-go plugin "
 # via: https://github.com/microsoft/vscode-go/blob/master/.travis.yml
 go get -u -v github.com/acroca/go-symbols
